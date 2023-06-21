@@ -102,6 +102,7 @@ export default {
         padding: 10px 20px;
         margin: 0 10px;
         color: #b43e3e;
+        border-radius: 10px;
       }
     }
   }
