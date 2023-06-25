@@ -14,9 +14,9 @@
           <li>
             <router-link to="/intro">소개</router-link>
           </li>
-          <li>
+          <!-- <li>
             <router-link to="/member">작가소개</router-link>
-          </li>
+          </li> -->
           <li>
             <router-link to="/port">포트폴리오</router-link>
           </li>

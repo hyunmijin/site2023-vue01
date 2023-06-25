@@ -3,7 +3,7 @@
   <YoutubeSlider />
   <YoutubeSearch />
   <YoutubeTag />
-  <YoutubeCont :youtubes="youtube" />
+  <YoutubeCont :youtubes="youtubes" />
 </template>
 
 <script>
@@ -25,15 +25,18 @@ export default {
 
   setup() {
     const youtubes = ref([]);
+    const searchs = ref([]);
+    const search = ref("marvel");
 
     const TopYoutubes = async () => {
       await fetch(
-        "https://api.theyoutubedb.org/3/youtube/popular?api_key=6b6c09dc96064ff256d6877434f62094"
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q=${search.value}&key=AIzaSyChAblDVV_gbDjwCCNxAKcECZvTBLtjcQ8`
       )
         .then((response) => response.json())
         .then((result) => {
           console.log(result);
           youtubes.value = result.results;
+          searchs.value = result.results;
         })
         .catch((error) => console.log("error", error));
     };
@@ -41,6 +44,7 @@ export default {
 
     return {
       youtubes,
+      searchs,
       TopYoutubes,
     };
   },

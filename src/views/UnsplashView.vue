@@ -12,7 +12,7 @@ import UnsplashSlider from "@/components/unsplash/UnsplashSlider.vue";
 import UnsplashSearch from "@/components/unsplash/UnsplashSearch.vue";
 import UnsplashTag from "@/components/unsplash/UnsplashTag.vue";
 import UnsplashCont from "@/components/unsplash/UnsplashCont.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 export default {
   components: {
@@ -24,28 +24,28 @@ export default {
   },
 
   setup() {
-    const movies = ref([]);
+    const unsplash = ref([]);
     const searchs = ref([]);
     const search = ref("marvel");
 
-    const TopMovies = async () => {
+    const TopUnsplash = async () => {
       await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=6b6c09dc96064ff256d6877434f62094&query=${search.value}`
+        `https://api.unsplash.com/search/photos?client_id=xl3XdD26yx6VUDJS2flUAuj_0xNZpW0a_yfYiBdOX7Y&per_page=30&query=${search.value}`
       )
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
-          movies.value = result.results;
+          // console.log(result);
+          unsplash.value = result.results;
           searchs.value = result.results;
         })
         .catch((error) => console.log("error", error));
     };
-    TopMovies();
+    onMounted(TopUnsplash);
 
     return {
-      movies,
+      unsplash,
       searchs,
-      TopMovies,
+      TopUnsplash,
     };
   },
 };

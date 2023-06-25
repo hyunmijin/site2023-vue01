@@ -1,31 +1,94 @@
 <template>
-  <div className="youtube__tag">
-    <ul>
-      <li><a href="/">전체</a></li>
-      <li><a href="/">음악영화</a></li>
-      <li><a href="/">미술영화</a></li>
-      <li><a href="/">고전영화</a></li>
-      <li><a href="/">최신영화</a></li>
-    </ul>
+  <div class="movie__tag">
+    <div>
+      <ul>
+        <li
+          v-for="(tag, index) in movieTagList"
+          :key="index"
+          :class="{ active: tag.name === activeTag }"
+          @click="btnClick(tag.name)"
+        >
+          <a href="#">{{ tag.name }}</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.youtube__tag {
+<script>
+export default {
+  data() {
+    return {
+      movieTagList: [
+        {
+          name: "인기 영화",
+          url: "https://api.themoviedb.org/3/movie/popular",
+        },
+        {
+          name: "현재 상영작",
+          url: "https://api.themoviedb.org/3/movie/now_playing",
+        },
+        {
+          name: "최신 영화",
+          url: "https://api.themoviedb.org/3/movie/upcoming",
+        },
+        {
+          name: "인기 티비쇼",
+          url: "https://api.themoviedb.org/3/tv/popular",
+        },
+        {
+          name: "티비쇼 순위",
+          url: "https://api.themoviedb.org/3/tv/top_rated",
+        },
+      ],
+      activeTag: "인기 영화",
+    };
+  },
+  methods: {
+    btnClick(tagName) {
+      const clickedTag = this.movieTagList.find((tag) => tag.name === tagName);
+      console.log(clickedTag.url);
+      if (clickedTag) {
+        this.activeTag = clickedTag.name;
+        this.onSearch(clickedTag.url);
+      }
+    },
+  },
+  props: {
+    onSearch: {
+      type: Function,
+      required: true,
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+.movie__tag {
   ul {
-    justify-content: center;
     display: flex;
-    margin-bottom: 50px;
+    justify-content: center;
     margin-top: 100px;
+    margin-bottom: 50px;
 
     li {
       a {
+        display: inline-block;
         border: 1px solid #b43e3e;
         padding: 10px 20px;
         margin: 0 10px;
         color: #b43e3e;
-        border-radius: 10px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #b43e3e;
+          color: #fff;
+        }
       }
+    }
+    li.active a {
+      background-color: #b43e3e;
+      color: #fff;
     }
   }
 }

@@ -1,9 +1,30 @@
 <template>
-  <div className="unsplash__search">
-    <input type="text" placeholder="이미지 검색하기" />
-    <button>검색</button>
+  <div class="unsplash__search">
+    <input
+      type="text"
+      placeholder="이미지 검색하기"
+      v-model="inputValue"
+      @keypress.enter="handleSearch"
+    />
+
+    <button @click="handleSearch">검색</button>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      inputValue: "",
+    };
+  },
+  methods: {
+    handleSearch() {
+      this.$emit("search", this.searchTerm);
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 .unsplash__search {

@@ -1,18 +1,13 @@
 <template>
-  <div class="movie__cont container">
+  <div class="unsplash__cont container">
     <ul>
-      <li v-for="(movie, index) in movies" :key="index">
-        <a
-          :href="`https://www.themoviedb.org/movie/${movie.id}`"
-          target="_blank"
-        >
-          <img
-            :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`"
-            :alt="movie.title"
-          />
+      <li v-for="(unsplash, index) in unsplash" :key="index">
+        <a :href="`https://unsplash.com/photos/${unsplash.id}`" target="_blank">
+          <img :src="unsplash.urls.regular" :alt="unsplash.alt_description" />
+
           <em>
-            <span class="title">{{ movie.title }}</span>
-            <span class="star">{{ movie.vote_average }}</span>
+            <span class="title">{{ unsplash.title }}</span>
+            <span class="star">{{ unsplash.vote_average }}</span>
           </em>
         </a>
       </li>
@@ -23,7 +18,7 @@
 <script>
 export default {
   props: {
-    movies: {
+    unsplash: {
       type: Array,
       required: true,
     },
@@ -32,39 +27,13 @@ export default {
 </script>
 
 <style lang="scss">
-.movie__cont {
+.unsplash__cont {
   ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    column-count: 4;
+    column-gap: 20px;
 
     li {
-      width: 32.333%;
-      position: relative;
-      margin-bottom: 2%;
-
-      .title {
-        font-size: 20px;
-        padding: 3px 0;
-        display: inline-block;
-
-        &:hover {
-          text-decoration: underline;
-          text-underline-position: under;
-        }
-      }
-      .star {
-        position: absolute;
-        right: 20px;
-        top: 20px;
-        width: 30px;
-        height: 30px;
-        background-color: #fff;
-        text-align: center;
-        line-height: 30px;
-        border-radius: 50%;
-        font-size: 12px;
-      }
+      margin-bottom: 20px;
     }
   }
 }

@@ -2,7 +2,7 @@
   <ContTitle title="movies" />
   <MovieSlider />
   <MovieSearch />
-  <MovieTag />
+  <MovieTag :on-search="searchMovies" />
   <MovieCont :movies="movies" />
 </template>
 
@@ -12,7 +12,7 @@ import MovieSlider from "@/components/movie/MovieSlider.vue";
 import MovieSearch from "@/components/movie/MovieSearch.vue";
 import MovieTag from "@/components/movie/MovieTag.vue";
 import MovieCont from "@/components/movie/MovieCont.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 export default {
   components: {
@@ -34,18 +34,28 @@ export default {
       )
         .then((response) => response.json())
         .then((result) => {
-          console.log(result);
           movies.value = result.results;
           searchs.value = result.results;
         })
         .catch((error) => console.log("error", error));
     };
-    TopMovies();
+    onMounted(TopMovies);
 
+    const searchMovies = async () => {
+      await fetch(
+        `https://api.themoviedb.org/3/movie/popular?api_key=6b6c09dc96064ff256d6877434f62094`
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          movies.value = result.results;
+          searchs.value = result.results;
+        })
+        .catch((error) => console.log("error", error));
+    };
     return {
       movies,
       searchs,
-      TopMovies,
+      searchMovies,
     };
   },
 };
