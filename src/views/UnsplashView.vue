@@ -1,9 +1,9 @@
 <template>
   <ContTitle title="unsplash" />
-  <UnsplashSlider />
-  <UnsplashSearch />
+  <UnsplashSlider :sliderImages="sliderImages" />
+  <UnsplashSearch @search="SearchImage" />
   <UnsplashTag @search="SearchImage" />
-  <UnsplashCont :unsplash="unsplash" />
+  <UnsplashCont :images="images" />
 </template>
 
 <script>
@@ -12,7 +12,7 @@ import UnsplashSlider from "@/components/unsplash/UnsplashSlider.vue";
 import UnsplashSearch from "@/components/unsplash/UnsplashSearch.vue";
 import UnsplashTag from "@/components/unsplash/UnsplashTag.vue";
 import UnsplashCont from "@/components/unsplash/UnsplashCont.vue";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 export default {
   components: {
@@ -24,28 +24,53 @@ export default {
   },
 
   setup() {
-    const unsplash = ref([]);
-    const searchs = ref([]);
-    const search = ref("marvel");
+    const images = ref([]);
+    const sliderImages = ref([]);
 
-    const TopUnsplash = async () => {
+    const TopImages = async () => {
       await fetch(
-        `https://api.unsplash.com/search/photos?client_id=xl3XdD26yx6VUDJS2flUAuj_0xNZpW0a_yfYiBdOX7Y&per_page=30&query=${search.value}`
+        `https://api.unsplash.com/photos?client_id=xl3XdD26yx6VUDJS2flUAuj_0xNZpW0a_yfYiBdOX7Y&per_page=30`
       )
         .then((response) => response.json())
         .then((result) => {
           // console.log(result);
-          unsplash.value = result.results;
-          searchs.value = result.results;
+          console.log(result);
+          images.value = result;
         })
         .catch((error) => console.log("error", error));
     };
-    onMounted(TopUnsplash);
+    TopImages();
 
+    const SearchImage = async (query) => {
+      await fetch(
+        `https://api.unsplash.com/search/photos?client_id=xl3XdD26yx6VUDJS2flUAuj_0xNZpW0a_yfYiBdOX7Y&per_page=30&query=${query}`
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          images.value = result.results;
+        })
+        .catch((error) => console.log(error));
+    };
+
+    const SliderImages = () => {
+      fetch(
+        `https://api.unsplash.com/photos?client_id=xl3XdD26yx6VUDJS2flUAuj_0xNZpW0a_yfYiBdOX7Y&per_page=30`
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          sliderImages.value = result.filter(
+            (image) => image.width > image.height
+          );
+        })
+        .catch((error) => console.log(error));
+    };
+    SliderImages();
     return {
-      unsplash,
-      searchs,
-      TopUnsplash,
+      images,
+      sliderImages,
+      TopImages,
+      SearchImage,
+      SliderImages,
     };
   },
 };

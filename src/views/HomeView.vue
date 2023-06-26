@@ -1,7 +1,7 @@
 <template>
   <main>
     <SliderSection :attr="'slider__wrap cafe5'" />
-    <IntroSection :attr="'intro__wrap container section bg-blue'" />
+    <IntroSection :attr="'intro__wrap container section'" />
     <PortSection :attr="'port__wrap section center'" />
     <MovieSection :attr="'movie__wrap cafe5 section'" />
     <YoutubehSection :attr="'youtube__wrap cafe5 section'" />

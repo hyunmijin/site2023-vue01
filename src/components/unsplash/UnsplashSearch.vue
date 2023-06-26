@@ -1,26 +1,47 @@
 <template>
-  <div class="unsplash__search">
+  <div class="unsplash__search container">
+    <h2 class="blind">검색하기</h2>
     <input
-      type="text"
-      placeholder="이미지 검색하기"
-      v-model="inputValue"
-      @keypress.enter="handleSearch"
+      ref="inputRef"
+      @keypress="onKeyPress"
+      type="search"
+      placeholder="이미지를 검색하세요!"
     />
-
-    <button @click="handleSearch">검색</button>
+    <button type="submit" @click="onClick" class="button-yellow">
+      검색하기
+    </button>
   </div>
 </template>
-
 <script>
 export default {
-  data() {
-    return {
-      inputValue: "",
-    };
+  mounted() {
+    this.$nextTick(() => {
+      this.inputRef = this.$refs.inputRef;
+    });
   },
   methods: {
     handleSearch() {
-      this.$emit("search", this.searchTerm);
+      const value = this.inputRef.value;
+      this.onSearch(value);
+    },
+    onKeyPress(event) {
+      if (event.key === "Enter") {
+        this.handleSearch();
+      }
+    },
+    onClick() {
+      this.handleSearch();
+    },
+  },
+  data() {
+    return {
+      inputRef: null,
+    };
+  },
+  props: {
+    onSearch: {
+      type: Function,
+      required: true,
     },
   },
 };

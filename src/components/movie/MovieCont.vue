@@ -1,9 +1,20 @@
 <template>
   <div class="movie__cont container">
     <ul>
-      <li v-for="movie in movies" :key="movie.id">
-        <a :href="getMovieUrl(movie.id)" target="_blank">
-          <img :src="getMoviePosterUrl(movie.poster_path)" :alt="movie.title" />
+      <li v-for="(movie, index) in movies" :key="index">
+        <a
+          :href="`https://www.themoviedb.org/movie/${movie.id}`"
+          target="_blank"
+        >
+          <img
+            :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`"
+            :alt="movie.title"
+          />
+        </a>
+        <a
+          :href="`https://www.themoviedb.org/movie/${movie.id}`"
+          target="_blank"
+        >
           <em>
             <span class="title">{{ movie.title }}</span>
             <span class="star">{{ movie.vote_average }}</span>
@@ -13,21 +24,12 @@
     </ul>
   </div>
 </template>
-
 <script>
 export default {
   props: {
     movies: {
       type: Array,
       required: true,
-    },
-  },
-  methods: {
-    getMovieUrl(movieId) {
-      return `https://www.themoviedb.org/movie/${movieId}`;
-    },
-    getMoviePosterUrl(posterPath) {
-      return `https://image.tmdb.org/t/p/w500${posterPath}`;
     },
   },
 };
