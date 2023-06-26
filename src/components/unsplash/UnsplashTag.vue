@@ -1,15 +1,35 @@
 <template>
-  <div className="unsplash__tag">
+  <div class="unsplash__tag container">
     <ul>
-      <li><a href="/">전체</a></li>
-      <li><a href="/">다나카 타츠야 작품</a></li>
-      <li><a href="/">작품사진</a></li>
-      <li><a href="/">인기사진</a></li>
-      <li><a href="/">최근사진</a></li>
+      <li>
+        <router-link to="" @click="onClick('art')">예술</router-link>
+      </li>
+      <li>
+        <router-link to="" @click="onClick('morden')">현대 미술</router-link>
+      </li>
+      <li>
+        <router-link to="" @click="onClick('sculpture')">구조물</router-link>
+      </li>
+      <li>
+        <router-link to="" @click="onClick('design')">디자인</router-link>
+      </li>
+      <li>
+        <router-link to="" @click="onClick('illustration')"
+          >일러스트</router-link
+        >
+      </li>
     </ul>
   </div>
 </template>
-
+<script>
+export default {
+  methods: {
+    onClick(value) {
+      this.$emit("search", value);
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 .unsplash__tag {
   ul {
@@ -19,13 +39,11 @@
     margin-top: 100px;
 
     li {
-      a {
-        border: 1px solid #b43e3e;
-        padding: 10px 20px;
-        margin: 0 10px;
-        color: #b43e3e;
-        border-radius: 10px;
-      }
+      border: 1px solid #b43e3e;
+      padding: 10px 20px;
+      margin: 0 10px;
+      color: #b43e3e;
+      border-radius: 10px;
     }
   }
 }

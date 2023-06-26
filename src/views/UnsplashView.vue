@@ -2,7 +2,7 @@
   <ContTitle title="unsplash" />
   <UnsplashSlider />
   <UnsplashSearch />
-  <UnsplashTag />
+  <UnsplashTag @search="SearchImage" />
   <UnsplashCont :unsplash="unsplash" />
 </template>
 

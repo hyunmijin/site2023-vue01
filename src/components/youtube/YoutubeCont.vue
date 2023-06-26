@@ -1,5 +1,5 @@
 <template>
-  <div class="youtube__cont container">
+  <div class="youtube__cont container dream">
     <ul>
       <li v-for="(youtube, index) in youtubes" :key="index">
         <img
@@ -11,7 +11,6 @@
     </ul>
   </div>
 </template>
-
 <script>
 export default {
   props: {

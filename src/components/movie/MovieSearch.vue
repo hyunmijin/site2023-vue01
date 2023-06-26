@@ -5,7 +5,7 @@
       ref="inputRef"
       type="search"
       @keypress="onKeyPress"
-      placeholder="이미지를 검색하세요 !"
+      placeholder="영화를 검색하세요 !"
     />
     <button type="submit" @click="onClick">검색하기</button>
   </div>
