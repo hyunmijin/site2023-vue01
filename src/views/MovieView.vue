@@ -1,6 +1,6 @@
 <template>
   <ContTitle title="movies" />
-  <MovieSlider />
+  <MovieSlider :movies="movies" />
   <MovieSearch />
   <MovieTag :on-search="searchMovies" />
   <MovieCont :movies="movies" />

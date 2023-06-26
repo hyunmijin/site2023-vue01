@@ -3,7 +3,7 @@
   <YoutubeSlider />
   <YoutubeSearch />
   <YoutubeTag />
-  <YoutubeCont :youtubes="youtubes" />
+  <YoutubeCont :youtubes="searchs" />
 </template>
 
 <script>
@@ -12,9 +12,16 @@ import YoutubeSlider from "@/components/youtube/YoutubeSlider.vue";
 import YoutubeSearch from "@/components/youtube/YoutubeSearch.vue";
 import YoutubeTag from "@/components/youtube/YoutubeTag.vue";
 import YoutubeCont from "@/components/youtube/YoutubeCont.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 export default {
+  props: {
+    youtubes: {
+      type: Array,
+      required: true,
+    },
+  },
+
   components: {
     ContTitle,
     YoutubeSlider,
@@ -24,9 +31,8 @@ export default {
   },
 
   setup() {
-    const youtubes = ref([]);
-    const searchs = ref([]);
     const search = ref("marvel");
+    const searchs = ref([]);
 
     const TopYoutubes = async () => {
       await fetch(
@@ -35,17 +41,16 @@ export default {
         .then((response) => response.json())
         .then((result) => {
           console.log(result);
-          youtubes.value = result.results;
-          searchs.value = result.results;
+          searchs.value = result.items;
         })
         .catch((error) => console.log("error", error));
     };
-    TopYoutubes();
+
+    onMounted(TopYoutubes);
 
     return {
-      youtubes,
+      search,
       searchs,
-      TopYoutubes,
     };
   },
 };

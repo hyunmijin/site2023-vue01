@@ -2,19 +2,11 @@
   <div class="youtube__cont container">
     <ul>
       <li v-for="(youtube, index) in youtubes" :key="index">
-        <a
-          :href="`https://www.theyoutubedb.org/youtube/${youtube.id}`"
-          target="_blank"
-        >
-          <img
-            :src="`https://image.tmdb.org/t/p/w500${youtube.poster_path}`"
-            :alt="youtube.title"
-          />
-          <em>
-            <span class="title">{{ youtube.title }}</span>
-            <span class="star">{{ youtube.vote_average }}</span>
-          </em>
-        </a>
+        <img
+          :src="youtube.snippet.thumbnails.medium.url"
+          :alt="youtube.snippet.title"
+        />
+        <span>{{ youtube.snippet.title }}</span>
       </li>
     </ul>
   </div>
